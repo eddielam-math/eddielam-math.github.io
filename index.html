@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eddie Lam — Mathematics</title>
+  <meta name="description" content="Research in algebraic geometry, quantum cohomology, Coulomb branches, and geometric representation theory.">
+  <meta name="theme-color" content="#07131d">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307131d'/%3E%3Cpath d='M15 47 27 17h9l13 30h-8l-3-8H25l-3 8Zm13-15h8l-4-11Z' fill='%236ce5d5'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #07131d;
+      --ink-soft: #0d202d;
+      --paper: #f3f7f5;
+      --muted: #9bb1ba;
+      --line: rgba(206, 232, 229, .16);
+      --accent: #6ce5d5;
+      --accent-2: #a7f3e8;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--paper);
+      background:
+        linear-gradient(rgba(108, 229, 213, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108, 229, 213, .035) 1px, transparent 1px),
+        var(--ink);
+      background-size: 42px 42px;
+      font-family: var(--sans);
+      font-size: 1rem;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+    .skip-link {
+      position: fixed;
+      left: 1rem;
+      top: -5rem;
+      z-index: 20;
+      padding: .65rem 1rem;
+      color: var(--ink);
+      background: var(--accent);
+    }
+    .skip-link:focus { top: 1rem; }
+
+    .shell {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 19, 29, .9);
+      backdrop-filter: blur(18px);
+    }
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .wordmark {
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .wordmark span { color: var(--accent); }
+    nav { display: flex; gap: 1.6rem; }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .86rem;
+      transition: color .2s ease;
+    }
+    nav a:hover, nav a:focus-visible { color: var(--accent); }
+
+    main { overflow: hidden; }
+    .hero {
+      min-height: calc(100svh - 72px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr);
+      gap: clamp(3rem, 8vw, 8rem);
+      align-items: center;
+      padding: clamp(5rem, 10vh, 8rem) 0;
+    }
+    .eyebrow, .section-kicker {
+      margin: 0 0 1.2rem;
+      color: var(--accent);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 880px;
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 8.5vw, 8rem);
+      font-weight: 400;
+      line-height: .92;
+      letter-spacing: -.055em;
+    }
+    h1 em { color: var(--accent); font-style: italic; }
+    .lead {
+      max-width: 700px;
+      margin: 2rem 0 0;
+      color: #d1e0e2;
+      font-family: var(--serif);
+      font-size: clamp(1.25rem, 2vw, 1.75rem);
+      line-height: 1.45;
+    }
+    .hero-links { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2.5rem; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: .65rem;
+      min-height: 48px;
+      padding: .75rem 1.1rem;
+      border: 1px solid var(--accent);
+      text-decoration: none;
+      font-size: .88rem;
+      font-weight: 700;
+      transition: background .2s ease, color .2s ease, transform .2s ease;
+    }
+    .button::after { content: "↗"; font-size: 1rem; }
+    .button.primary { color: var(--ink); background: var(--accent); }
+    .button.secondary { color: var(--accent); }
+    .button:hover, .button:focus-visible { transform: translateY(-2px); }
+    .button.secondary:hover, .button.secondary:focus-visible { color: var(--ink); background: var(--accent); }
+
+    .hero-index {
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      border-left: 1px solid var(--line);
+      padding-left: clamp(1.5rem, 4vw, 3.5rem);
+    }
+    .hero-index .mark {
+      margin: auto 0;
+      color: rgba(108, 229, 213, .9);
+      font-family: var(--serif);
+      font-size: clamp(6rem, 15vw, 12rem);
+      font-style: italic;
+      line-height: 1;
+    }
+    .index-label { color: var(--muted); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; }
+    .index-list { margin: .85rem 0 0; padding: 0; list-style: none; }
+    .index-list li { padding: .55rem 0; border-top: 1px solid var(--line); font-size: .92rem; }
+
+    section { scroll-margin-top: 92px; }
+    .section {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      border-top: 1px solid var(--line);
+    }
+    .section-grid {
+      display: grid;
+      grid-template-columns: minmax(180px, .42fr) minmax(0, 1.58fr);
+      gap: clamp(2rem, 8vw, 8rem);
+    }
+    .section-title {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(2.3rem, 4vw, 4rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -.035em;
+    }
+
+    .research-intro {
+      max-width: 760px;
+      margin: 0 0 3rem;
+      color: #d1e0e2;
+      font-family: var(--serif);
+      font-size: clamp(1.2rem, 2vw, 1.55rem);
+      line-height: 1.55;
+    }
+    .research-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); }
+    .research-card { min-height: 220px; padding: 1.6rem; background: var(--ink); }
+    .research-card .number { color: var(--accent); font-size: .75rem; font-weight: 800; letter-spacing: .14em; }
+    .research-card h3 { margin: 3rem 0 .65rem; font-family: var(--serif); font-size: 1.45rem; font-weight: 400; }
+    .research-card p { margin: 0; color: var(--muted); font-size: .93rem; }
+
+    .papers { display: grid; gap: 1px; background: var(--line); }
+    .paper {
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr) 34px;
+      gap: 1.5rem;
+      align-items: start;
+      padding: 2rem;
+      color: inherit;
+      background: var(--ink);
+      text-decoration: none;
+      transition: background .25s ease;
+    }
+    .paper:hover, .paper:focus-visible { background: var(--ink-soft); }
+    .paper-year { color: var(--accent); font-size: .8rem; font-weight: 800; letter-spacing: .1em; }
+    .paper h3 { margin: 0; font-family: var(--serif); font-size: clamp(1.35rem, 2.2vw, 2rem); font-weight: 400; line-height: 1.25; }
+    .paper .authors { margin: .65rem 0 0; color: var(--muted); font-size: .9rem; }
+    .paper .summary { max-width: 720px; margin: 1rem 0 0; color: #bed0d4; font-size: .95rem; }
+    .paper .arrow { color: var(--accent); font-size: 1.4rem; transition: transform .2s ease; }
+    .paper:hover .arrow { transform: translate(3px, -3px); }
+
+    .directions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
+    .direction { padding-top: 1.15rem; border-top: 2px solid var(--accent); }
+    .direction h3 { margin: 0 0 .6rem; font-family: var(--serif); font-size: 1.35rem; font-weight: 400; }
+    .direction p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+    footer { padding: 2rem 0 3rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }
+    .footer-row { display: flex; justify-content: space-between; gap: 2rem; }
+    footer a { color: var(--accent); text-underline-offset: .2em; }
+
+    @media (max-width: 800px) {
+      .shell { width: min(100% - 32px, 680px); }
+      nav { gap: 1rem; }
+      nav a:nth-child(2) { display: none; }
+      .hero { min-height: auto; grid-template-columns: 1fr; gap: 4rem; }
+      .hero-index { min-height: 300px; border-left: 0; border-top: 1px solid var(--line); padding: 2rem 0 0; }
+      .hero-index .mark { margin: 0 0 2rem; }
+      .section-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .directions { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    @media (max-width: 560px) {
+      body { background-size: 32px 32px; }
+      .nav { min-height: 64px; }
+      nav a { font-size: .8rem; }
+      nav a:nth-child(3) { display: none; }
+      h1 { font-size: clamp(3.2rem, 17vw, 5rem); }
+      .research-grid { grid-template-columns: 1fr; }
+      .paper { grid-template-columns: 1fr 30px; padding: 1.5rem; gap: 1rem; }
+      .paper-year { grid-column: 1 / -1; }
+      .footer-row { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header>
+    <div class="shell nav">
+      <a class="wordmark" href="#top">Eddie Lam <span>·</span> Math</a>
+      <nav aria-label="Primary navigation">
+        <a href="#research">Research</a>
+        <a href="#papers">Papers</a>
+        <a href="#directions">Directions</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="shell hero" id="top" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">Algebraic geometry · Geometric representation theory</p>
+        <h1 id="hero-title"><em>Eddie</em> Lam</h1>
+        <p class="lead">I study quantum geometry and its interactions with representation theory—especially shift operators, Coulomb branches, Gromov–Witten theory, and quantum K-theory.</p>
+        <div class="hero-links">
+          <a class="button primary" href="#papers">Selected papers</a>
+          <a class="button secondary" href="https://arxiv.org/search/math?searchtype=author&amp;query=Lam,+C+H+E" target="_blank" rel="noopener noreferrer">arXiv profile</a>
+        </div>
+      </div>
+      <aside class="hero-index" aria-label="Research areas">
+        <div class="mark" aria-hidden="true">λ</div>
+        <span class="index-label">Research coordinates</span>
+        <ul class="index-list">
+          <li>Quantum cohomology &amp; K-theory</li>
+          <li>Coulomb branches &amp; 3d mirror symmetry</li>
+          <li>DAHA &amp; stable envelopes</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="section" id="research" aria-labelledby="research-title">
+      <div class="shell section-grid">
+        <div>
+          <p class="section-kicker">01 · Research</p>
+          <h2 class="section-title" id="research-title">Geometry in motion</h2>
+        </div>
+        <div>
+          <p class="research-intro">My work uses moduli spaces and enumerative invariants to construct geometric actions of algebras arising in representation theory and mathematical physics.</p>
+          <div class="research-grid">
+            <article class="research-card">
+              <span class="number">R / 01</span>
+              <h3>Quantum geometry</h3>
+              <p>Gromov–Witten theory, quantum cohomology, quantum K-theory, quasimaps, and shift operators.</p>
+            </article>
+            <article class="research-card">
+              <span class="number">R / 02</span>
+              <h3>Coulomb branches</h3>
+              <p>Geometric realizations of Coulomb-branch actions and their role in three-dimensional mirror symmetry.</p>
+            </article>
+            <article class="research-card">
+              <span class="number">R / 03</span>
+              <h3>Representation theory</h3>
+              <p>DAHA, affine Grassmannians and flags, stable envelopes, and Weyl-group symmetries.</p>
+            </article>
+            <article class="research-card">
+              <span class="number">R / 04</span>
+              <h3>Mirror phenomena</h3>
+              <p>Connections among quantum differential equations, symplectic resolutions, and mirror constructions.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="papers" aria-labelledby="papers-title">
+      <div class="shell section-grid">
+        <div>
+          <p class="section-kicker">02 · Selected work</p>
+          <h2 class="section-title" id="papers-title">Papers</h2>
+        </div>
+        <div class="papers">
+          <a class="paper" href="https://arxiv.org/abs/2601.19691" target="_blank" rel="noopener noreferrer">
+            <span class="paper-year">2026 · arXiv</span>
+            <div>
+              <h3>Iwahori-Coulomb branches, stable envelopes, and quantum cohomology of cotangent bundles of flag varieties</h3>
+              <p class="authors">with Ki Fung Chan, Kwokwai Chan, and Chi Hong Chow</p>
+              <p class="summary">Constructs and computes an Iwahori-Coulomb branch action on localized equivariant quantum cohomology, with applications to trigonometric DAHA and Namikawa–Weyl symmetries.</p>
+            </div>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="paper" href="https://arxiv.org/abs/2505.23340" target="_blank" rel="noopener noreferrer">
+            <span class="paper-year">2025 · arXiv</span>
+            <div>
+              <h3>Quantum cohomology, shift operators, and Coulomb branches</h3>
+              <p class="authors">with Ki Fung Chan and Kwokwai Chan</p>
+              <p class="summary">Characterizes Coulomb branch algebras through regularity of shift operators and produces families of Lagrangians from equivariant big quantum cohomology.</p>
+            </div>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="directions" aria-labelledby="directions-title">
+      <div class="shell section-grid">
+        <div>
+          <p class="section-kicker">03 · In progress</p>
+          <h2 class="section-title" id="directions-title">Current directions</h2>
+        </div>
+        <div class="directions">
+          <article class="direction">
+            <h3>K-theoretic shift operators</h3>
+            <p>Extending the Coulomb-branch and shift-operator picture from quantum cohomology to quantum K-theory.</p>
+          </article>
+          <article class="direction">
+            <h3>DAHA representations</h3>
+            <p>Geometric constructions of double affine Hecke algebra actions and links to skein-theoretic phenomena.</p>
+          </article>
+          <article class="direction">
+            <h3>Enumerative geometry</h3>
+            <p>Wall-crossing, degeneration, and mirror structures for stable maps, quasimaps, and spherical varieties.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-row">
+      <span>© <span id="year">2026</span> Eddie Lam</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
